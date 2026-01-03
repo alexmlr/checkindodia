@@ -5,6 +5,7 @@ import { Notifier } from './notifier.js';
 
 async function main() {
     console.log('Starting Daily Report Scraper...');
+    console.log('Execution Mode: Compiled JS (npm start)');
 
     // 1. Validate Env
     try {
