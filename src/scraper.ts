@@ -96,7 +96,19 @@ export class Scraper {
 
                 // Payment Status Logic
                 let paymentStatus = `Falta pagar: ${totalPaymentText}`;
-                if (totalPaymentText === 'R$ 0,00') {
+
+                // Clean string to get numerical value:
+                // 1. Remove "R$" and spaces and replace comma with dot
+                // Ex: "- R$ 50,00" -> "-50.00"
+                // Ex: "R$ 0,00" -> "0.00"
+                const cleanValueString = totalPaymentText
+                    .replace(/[R$\s.]/g, '') // Remove R$, space, thousand separator dots
+                    .replace(',', '.');      // Replace decimal comma with dot
+
+                const paymentValue = parseFloat(cleanValueString);
+
+                // If parse worked and value is <= 0 (negative or zero), consider it paid
+                if (!isNaN(paymentValue) && paymentValue <= 0) {
                     paymentStatus = 'Já pagou tudo';
                 }
 
