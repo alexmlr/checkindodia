@@ -2,8 +2,8 @@ name: Daily Report Scraper
 
 on:
   schedule:
-    # Runs at 12:00 UTC (9:00 AM Brasilia Time approx) everyday
-    - cron: '0 12 * * *'
+    # 11:55 UTC = 08:55 Horário de Brasília
+    - cron: '55 11 * * *'
   workflow_dispatch: # Allows manual trigger
 
 jobs:
