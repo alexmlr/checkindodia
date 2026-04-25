@@ -52,7 +52,7 @@ export class Formatter {
                     💰 ${res.paymentStatus}<br>
                     👤 ${res.peopleCount}
                     ${romantic}
-                </div>`;
+                </div><br><br>`;
             })
             .join('');
 

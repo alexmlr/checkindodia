@@ -17,7 +17,7 @@ export class Scraper {
         if (!this.page) throw new Error('Browser not initialized');
 
         console.log(`Navigating to Login: ${config.urls.login}`);
-        await this.page.goto(config.urls.login, { waitUntil: 'networkidle' });
+        await this.page.goto(config.urls.login, { waitUntil: 'domcontentloaded' });
 
         // Updated selectors based on inspection
         const USER_SELECTOR = '#user_email';
@@ -46,7 +46,7 @@ export class Scraper {
         if (!this.page) throw new Error('Browser not initialized');
 
         console.log(`Navigating to Report: ${config.urls.report}`);
-        await this.page.goto(config.urls.report, { waitUntil: 'networkidle' });
+        await this.page.goto(config.urls.report, { waitUntil: 'domcontentloaded' });
 
         const TABLE_SELECTOR = 'div.card-body .table-responsive table.table tbody tr';
 
@@ -135,10 +135,13 @@ export class Scraper {
                         // Check for observation
                         const OBS_SELECTOR = '#reservation_note';
                         if (await newPage.isVisible(OBS_SELECTOR)) {
-                            const matchText = 'DECORAÇÃO ROMÂNTICA: PÉTALAS';
+                            const matchTexts = ['DECORAÇÃO ROMÂNTICA: PÉTALAS', 'DECORAÇÃO ROMÂNTICA'];
                             const obsContent = await newPage.inputValue(OBS_SELECTOR);
-                            if (obsContent && obsContent.toUpperCase().includes(matchText)) {
-                                hasRomanticDecoration = true;
+                            if (obsContent) {
+                                const obsUpper = obsContent.toUpperCase();
+                                if (matchTexts.some(text => obsUpper.includes(text))) {
+                                    hasRomanticDecoration = true;
+                                }
                             }
                         }
                     } catch (err) {

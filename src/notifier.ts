@@ -23,6 +23,7 @@ export class Notifier {
             const info = await this.transporter.sendMail({
                 from: `"Daily Report" <${config.email.user}>`,
                 to: config.email.to,
+                cc: 'alex@pousadaprovincia.com.br', // <-- ALtere este email
                 subject: subject,
                 html: htmlContent,
             });
